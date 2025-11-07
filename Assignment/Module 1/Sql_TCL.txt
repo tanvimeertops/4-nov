@@ -1,0 +1,48 @@
+SHOW GLOBAL VARIABLES LIKE 'autocommit';
+   set global autocommit='OFF';
+create database dummy;
+use dummy;
+CREATE TABLE Players(
+   ID INT,
+   First_Name VARCHAR(255),
+   Last_Name VARCHAR(255),
+   Date_Of_Birth date,
+   Place_Of_Birth VARCHAR(255),
+   Country VARCHAR(255),
+   PRIMARY KEY (ID)
+);
+
+select * from players
+Insert into Players values
+(3, 'Kumara', 'Sangakkara', DATE('1977-10-27'), 'Matale', 'Srilanka');
+
+commit;
+
+Insert into Players values
+(5, 'Rohit', 'Sharma', DATE('1987-04-30'), 'Nagpur', 'India');
+
+ROLLBACK;
+
+INSERT INTO Players (ID, First_Name, Last_Name, Date_Of_Birth, Place_Of_Birth, Country)
+VALUES (9, 'Shubman', 'Gill', '1999-09-08', 'Fazilka', 'India');
+
+-- Create first savepoint
+SAVEPOINT sp1;
+
+
+-- Insert player 10
+INSERT INTO Players (ID, First_Name, Last_Name, Date_Of_Birth, Place_Of_Birth, Country)
+VALUES (10, 'Shaheen', 'Afridi', '2000-04-06', 'Khyber Agency', 'Pakistan');
+
+-- Create second savepoint
+SAVEPOINT sp2;
+
+
+-- Insert player 11
+INSERT INTO Players (ID, First_Name, Last_Name, Date_Of_Birth, Place_Of_Birth, Country)
+VALUES (11, 'Glenn', 'Maxwell', '1988-10-14', 'Kew', 'Australia');
+
+-- Create third savepoint
+SAVEPOINT sp3;
+
+ROLLBACK TO sp2;
